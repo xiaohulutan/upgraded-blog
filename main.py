@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template,request
 from post import Post
 import requests
 
@@ -36,6 +36,18 @@ def read_post(num):
         if blog_post.id == num:
             requested_post = blog_post
     return render_template('post.html', post=requested_post)
+
+@app.route('/contact', methods=['GET', 'POST'])
+def form():
+    if request.method == "POST":
+        data = request.form
+        print(data['name'])
+        print(data['email'])
+        print(data['phone'])
+        print(data['message'])
+        return render_template("contact.html", msg_sent=True)
+    else:
+        return render_template("contact.html", msg_sent=False)
 
 
 if __name__=="__main__":
